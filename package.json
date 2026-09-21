@@ -1,0 +1,23 @@
+{
+  "name": "pdfcraft",
+  "version": "1.0.0",
+  "description": "Client-side private PDF editor",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "start": "vite build && node index.js",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "express": "^5.2.1",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.3.289",
+    "vite": "^8.3.0"
+  }
+}
