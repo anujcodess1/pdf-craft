@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDFCraft - Easy Online PDF Editor</title>
+  <meta name="description" content="Free, no watermarks or registration. Edit PDF files for free with PDFCraft. Fill & sign PDFs. Add text, images, links and shapes. Annotate and whiteout.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23be123c'/><text x='50' y='68' font-size='50' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'>P</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&family=Caveat:wght@400..700&family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Marck+Script&family=Pacifico&family=Sacramento&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="./src/css/sejda-theme.css">
+  <link rel="stylesheet" href="./src/css/editor.css">
+  <link rel="stylesheet" href="./src/css/toolbars.css">
+  <link rel="stylesheet" href="./src/css/modals.css">
+</head>
+<body>
+  <header class="sejda-header">
+    <div class="header-container">
+      <div class="header-left">
+        <a href="javascript://" class="brand-logo" id="nav-brand" title="PDFCraft - Online PDF Editor">
+          <div class="brand-icon">P</div>
+          <span class="brand-name">PDFCraft</span>
+          <span class="brand-subtitle">PDF Editor</span>
+        </a>
+        <a href="javascript://" class="nav-link active" id="nav-home">
+          <i class="fa-solid fa-house" style="font-size: 13px;"></i> Home
+        </a>
+        <a href="javascript://" class="nav-link" id="nav-editor" style="display: none;">
+          <i class="fa-solid fa-file-pen" style="font-size: 13px;"></i> Editor
+        </a>
+      </div>
+      <div class="header-right">
+        <span class="badge-unlimited" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #9f1239; background: rgba(190, 18, 60, 0.08); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(244, 63, 94, 0.35);">
+          <i class="fa-solid fa-crown" style="color: #e11d48;"></i> Free & Unlimited
+        </span>
+      </div>
+    </div>
+  </header>
+  <div class="stripe-background"></div>
+  <input type="file" id="pdf-file-input" accept="application/pdf" style="display: none;">
+  <input type="file" id="image-file-input" accept="image/*" style="display: none;">
+  <section class="step-upload" id="step-upload">
+    <h1 class="hero-title">
+      Online PDF editor <span class="badge-beta">BETA</span>
+    </h1>
+    <h2 class="hero-subtitle">
+      Edit PDF files for free. Fill &amp; sign PDF documents directly in your browser.
+    </h2>
+    <div class="drop-zone-card" id="drop-zone-card">
+      <div class="upload-actions">
+        <button class="btn-upload-main" id="btn-upload-trigger" onclick="document.getElementById('pdf-file-input').click()">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span>Upload PDF files</span>
+        </button>
+        <div class="upload-secondary-links">
+          <span class="link-blank-doc" id="btn-start-blank">
+            <i class="fa-regular fa-file"></i> or start with a blank document
+          </span>
+          <span style="color: #bbb;">|</span>
+          <span class="link-sample-doc" id="btn-start-sample">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Try with sample document
+          </span>
+        </div>
+      </div>
+      <div class="upload-privacy-note">
+        Files stay private. Processing runs securely 100% inside your browser.<br>
+        Free service for documents up to 200 pages or 50 MB.
+      </div>
+    </div>
+    <section class="how-it-works-section">
+      <h2 class="how-title">How To Edit PDF Files Online For Free</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Upload or Start Fresh</h3>
+          <p>Click 'Upload PDF' or choose 'start with a blank document'. Drag and drop works too.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Add &amp; Edit Text</h3>
+          <p>Select the 'Text' tool. Click anywhere to type, or click existing text to customize fonts and colors.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Fill &amp; Sign</h3>
+          <p>Create digital signatures by typing cursive handwriting, drawing with your mouse, or uploading an image.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h3>Whiteout &amp; Shapes</h3>
+          <p>Easily cover sensitive parts with whiteout, or add rectangles, ellipses, lines, arrows, and highlights.</p>
+        </div>
+      </div>
+    </section>
+  </section>
+  <section class="step-editor" id="step-editor">
+    <button class="btn-sidebar-toggle" id="btn-toggle-sidebar" title="Page Thumbnails">
+      <i class="fa-solid fa-table-cells-large"></i>
+    </button>
+    <aside class="thumbnail-sidebar" id="thumbnail-sidebar">
+      <div class="thumbnail-sidebar-header">
+        <span class="thumbnail-sidebar-title"><i class="fa-solid fa-book-open"></i> Page Thumbnails</span>
+        <button class="btn-close-modal" id="btn-close-sidebar">&times;</button>
+      </div>
+      <div class="thumbnail-sidebar-content">
+      </div>
+    </aside>
+    <div class="top-tools-bar-wrapper">
+      <div class="tools-menu-container" id="tools-menu">
+        <div class="tool-group">
+          <button class="btn-tool active" data-tool="text" title="Add or edit text">
+            <i class="fa-solid fa-i-cursor"></i>
+            <span>Text</span>
+          </button>
+        </div>
+        <div class="tool-group">
+          <button class="btn-tool" data-tool="link" title="Add hyperlinks">
+            <i class="fa-solid fa-link"></i>
+            <span>Links</span>
+          </button>
+        </div>
+        <div class="tool-group">
+          <button class="btn-tool" data-tool="form" title="Add form fields">
+            <i class="fa-brands fa-wpforms"></i>
+            <span>Forms</span>
+            <i class="fa-solid fa-caret-down btn-tool-caret"></i>
+          </button>
+          <div class="tool-dropdown-menu">
+            <div class="tool-dropdown-item" data-tool="form" data-subtool="text">
+              <i class="fa-solid fa-pen-to-square"></i> Text Field (Single Line)
+            </div>
+            <div class="tool-dropdown-item" data-tool="form" data-subtool="textarea">
+              <i class="fa-solid fa-align-left"></i> Textarea (Multiline)
+            </div>
+            <div class="tool-dropdown-item" data-tool="form" data-subtool="checkbox">
+              <i class="fa-regular fa-square-check"></i> Checkbox
+            </div>
+            <div class="tool-dropdown-item" data-tool="form" data-subtool="radio">
+              <i class="fa-regular fa-circle-dot"></i> Radio Button
+            </div>
+            <div class="tool-dropdown-item" data-tool="form" data-subtool="dropdown">
+              <i class="fa-solid fa-list"></i> Dropdown List
+            </div>
+            <div class="tool-dropdown-item" data-tool="form" data-subtool="signature">
+              <i class="fa-solid fa-signature"></i> Signature Box
+            </div>
+          </div>
+        </div>
+        <div class="tool-group">
+          <button class="btn-tool" data-tool="image" title="Upload and place images">
+            <i class="fa-regular fa-image"></i>
+            <span>Images</span>
+            <i class="fa-solid fa-caret-down btn-tool-caret"></i>
+          </button>
+          <div class="tool-dropdown-menu">
+            <div class="tool-dropdown-item" data-tool="image" data-subtool="new" onclick="document.getElementById('image-file-input').click()">
+              <i class="fa-solid fa-plus"></i> New Image...
+            </div>
+          </div>
+        </div>
+        <div class="tool-group">
+          <button class="btn-tool" data-tool="sign" title="Add digital signature">
+            <i class="fa-solid fa-signature"></i>
+            <span>Sign</span>
+            <i class="fa-solid fa-caret-down btn-tool-caret"></i>
+          </button>
+          <div class="tool-dropdown-menu">
+            <div class="tool-dropdown-item" data-tool="sign" data-subtool="new">
+              <i class="fa-solid fa-plus"></i> New Signature...
+            </div>
+          </div>
+        </div>
+        <div class="tool-group">
+          <button class="btn-tool" data-tool="whiteout" title="Redact or cover parts of page with whiteout">
+            <i class="fa-solid fa-eraser"></i>
+            <span>Whiteout</span>
+          </button>
+        </div>
+        <div class="tool-group">
+          <button class="btn-tool" data-tool="annotate" title="Highlight, strikeout, underline, or draw">
+            <i class="fa-solid fa-highlighter"></i>
+            <span>Annotate</span>
+            <i class="fa-solid fa-caret-down btn-tool-caret"></i>
+          </button>
+          <div class="tool-dropdown-menu">
+            <div class="tool-dropdown-item" data-tool="annotate" data-subtool="highlight">
+              <i class="fa-solid fa-highlighter" style="color: #FFD500;"></i> Highlight
+            </div>
+            <div class="tool-dropdown-item" data-tool="annotate" data-subtool="strikeout">
+              <i class="fa-solid fa-strikethrough"></i> Strike out
+            </div>
+            <div class="tool-dropdown-item" data-tool="annotate" data-subtool="underline">
+              <i class="fa-solid fa-underline"></i> Underline
+            </div>
+            <div class="tool-dropdown-item" data-tool="annotate" data-subtool="draw">
+              <i class="fa-solid fa-pencil"></i> Freehand Draw
+            </div>
+          </div>
+        </div>
+        <div class="tool-group">
+          <button class="btn-tool" data-tool="shape" title="Add rectangle, ellipse, line or arrow">
+            <i class="fa-solid fa-shapes"></i>
+            <span>Shapes</span>
+            <i class="fa-solid fa-caret-down btn-tool-caret"></i>
+          </button>
+          <div class="tool-dropdown-menu">
+            <div class="tool-dropdown-item" data-tool="shape" data-subtool="rectangle">
+              <i class="fa-regular fa-square"></i> Rectangle
+            </div>
+            <div class="tool-dropdown-item" data-tool="shape" data-subtool="ellipse">
+              <i class="fa-regular fa-circle"></i> Ellipse
+            </div>
+            <div class="tool-dropdown-item" data-tool="shape" data-subtool="line">
+              <i class="fa-solid fa-minus"></i> Line
+            </div>
+            <div class="tool-dropdown-item" data-tool="shape" data-subtool="arrow">
+              <i class="fa-solid fa-arrow-right"></i> Arrow
+            </div>
+          </div>
+        </div>
+        <div class="tool-divider"></div>
+        <div class="tool-group">
+          <button class="btn-tool" id="btn-undo" title="Undo last action (Ctrl+Z)">
+            <i class="fa-solid fa-arrow-rotate-left"></i>
+            <span>Undo</span>
+          </button>
+        </div>
+        <div class="tool-divider"></div>
+        <div class="zoom-controls">
+          <button class="btn-zoom" id="btn-zoom-out" title="Zoom Out"><i class="fa-solid fa-minus"></i></button>
+          <span class="zoom-level-text" id="zoom-level-text">100%</span>
+          <button class="btn-zoom" id="btn-zoom-in" title="Zoom In"><i class="fa-solid fa-plus"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="context-toolbar" id="context-toolbar">
+      <div class="context-text-controls" style="display: flex; align-items: center; gap: 3px;">
+        <button class="btn-context" id="context-btn-bold" title="Bold">
+          <i class="fa-solid fa-bold"></i>
+        </button>
+        <button class="btn-context" id="context-btn-italic" title="Italic">
+          <i class="fa-solid fa-italic"></i>
+        </button>
+        <input type="number" id="context-font-size" class="font-size-input" value="16" min="6" max="96" title="Font Size">
+        <select id="context-font-family" class="font-select" title="Font Family">
+          <option value="Helvetica">Helvetica</option>
+          <option value="Arial">Arial</option>
+          <option value="Times New Roman">Times New Roman</option>
+          <option value="Courier">Courier</option>
+        </select>
+      </div>
+      <div class="context-shape-controls" style="display: none; align-items: center; gap: 3px;">
+        <span style="font-size: 11px; color: #666; margin: 0 4px;">Fill/Border:</span>
+      </div>
+      <div style="position: relative;">
+        <button class="btn-context" id="context-btn-color" title="Color Palette">
+          <i class="fa-solid fa-palette"></i>
+        </button>
+        <div class="color-picker-dropdown" id="context-color-dropdown">
+          <div class="color-swatch-grid" id="context-color-swatches"></div>
+        </div>
+      </div>
+      <div class="context-common-controls" style="display: flex; align-items: center; gap: 3px;">
+        <button class="btn-context" id="context-btn-clone" title="Duplicate">
+          <i class="fa-regular fa-clone"></i>
+        </button>
+        <button class="btn-context btn-delete" id="context-btn-delete" title="Delete">
+          <i class="fa-regular fa-trash-can"></i>
+        </button>
+      </div>
+    </div>
+    <div class="workspace-viewport">
+      <div id="edit-pages-container">
+      </div>
+    </div>
+    <div class="bottom-fixed-bar">
+      <div class="submit-button-wrapper">
+        <button class="btn-apply-changes" id="btn-apply-changes">
+          <span>Apply changes</span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+  <section class="step-success" id="step-success">
+    <div class="preview-action-bar">
+      <div class="preview-bar-left">
+        <button class="btn-action-secondary" id="btn-continue-editing">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to Editor</span>
+        </button>
+        <div class="preview-meta-info">
+          <span class="preview-filename" id="success-filename">document_edited.pdf</span>
+          <span class="preview-meta-badge" id="success-meta">1 page • 120 KB</span>
+        </div>
+      </div>
+      <div class="preview-bar-right">
+        <button class="btn-action-secondary" id="btn-edit-another">
+          <i class="fa-solid fa-plus"></i>
+          <span>New Document</span>
+        </button>
+        <button class="btn-download-pdf" id="btn-download-pdf">
+          <i class="fa-solid fa-arrow-down-to-bracket"></i>
+          <span>Download PDF</span>
+        </button>
+      </div>
+    </div>
+    <div class="preview-notice-banner">
+      <i class="fa-solid fa-circle-check" style="color: var(--sejda-green-dark); font-size: 20px;"></i>
+      <div>
+        <strong>Changes applied successfully!</strong>
+        <span> Here is how your edited PDF document looks. Review the preview below before downloading.</span>
+      </div>
+    </div>
+    <div class="preview-viewport">
+      <div id="preview-pages-container" class="preview-pages-container">
+      </div>
+    </div>
+    <div class="preview-bottom-bar">
+      <button class="btn-action-secondary" id="btn-continue-editing-bottom">
+        <i class="fa-solid fa-arrow-left"></i> Continue Editing
+      </button>
+      <button class="btn-download-pdf" id="btn-download-pdf-bottom">
+        <i class="fa-solid fa-arrow-down-to-bracket"></i> Download PDF
+      </button>
+    </div>
+  </section>
+  <div class="modal-backdrop" id="password-modal-backdrop">
+    <div class="modal-dialog" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fa-solid fa-lock" style="color: var(--sejda-blue);"></i> Password Protected PDF</h3>
+        <button class="btn-close-modal" id="btn-close-password">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 14px; color: #555; margin-bottom: 12px; line-height: 1.4;">
+          This document is protected with a password. Please enter the password to unlock, view, and edit it.
+        </p>
+        <div class="aadhaar-hint-card">
+          <i class="fa-solid fa-id-card" style="color: #d97706; font-size: 20px; margin-top: 2px;"></i>
+          <div>
+            <strong style="display: block; color: #92400e; margin-bottom: 2px;">Aadhaar Card Hint:</strong>
+            <span>First 4 letters of your name in <strong>CAPITAL</strong> + 4-digit Year of Birth (e.g. <code>ANIT1990</code>).</span>
+          </div>
+        </div>
+        <div class="password-input-wrapper">
+          <input type="password" id="pdf-password-input" class="password-input-field" placeholder="Enter password...">
+          <button type="button" id="btn-toggle-password-visibility" class="btn-toggle-eye" title="Show/Hide Password">
+            <i class="fa-regular fa-eye" id="eye-icon"></i>
+          </button>
+        </div>
+        <div class="password-error-message" id="password-error-msg" style="display: none;"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-modal-cancel" id="btn-cancel-password">Cancel</button>
+        <button class="btn-modal-primary" id="btn-submit-password"><i class="fa-solid fa-lock-open"></i> Unlock PDF</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop" id="signature-modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Create Signature</h3>
+        <button class="btn-close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-tabs">
+          <div class="tab-btn active" data-tab="type">
+            <i class="fa-solid fa-font"></i> Type
+          </div>
+          <div class="tab-btn" data-tab="draw">
+            <i class="fa-solid fa-pen-nib"></i> Draw
+          </div>
+          <div class="tab-btn" data-tab="upload">
+            <i class="fa-solid fa-arrow-up-from-bracket"></i> Upload
+          </div>
+        </div>
+        <div class="tab-content-panel active" id="panel-sig-type">
+          <input type="text" id="type-sig-input" class="type-signature-input" placeholder="Type your name..." value="John Doe">
+          <div class="signature-fonts-grid" id="sig-fonts-grid">
+          </div>
+        </div>
+        <div class="tab-content-panel" id="panel-sig-draw">
+          <div class="signature-canvas-wrapper">
+            <canvas id="signature-pad-canvas"></canvas>
+            <button class="btn-clear-sig" id="btn-clear-sig-pad">Clear</button>
+          </div>
+          <p style="font-size: 12px; color: #777; margin-top: 8px;">
+            Draw your signature using your mouse, trackpad, or finger.
+          </p>
+        </div>
+        <div class="tab-content-panel" id="panel-sig-upload">
+          <input type="file" id="upload-sig-input" accept="image/*" style="display: none;">
+          <div class="upload-signature-drop" id="upload-sig-drop">
+            <i class="fa-regular fa-image" style="font-size: 32px; color: #aaa; margin-bottom: 8px;"></i>
+            <p style="font-size: 14px; font-weight: 500;">Click to upload an image of your signature</p>
+            <span style="font-size: 12px; color: #888;">PNG, JPG, or SVG</span>
+            <img id="upload-sig-preview" class="upload-sig-preview" alt="Signature preview">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-modal-cancel">Cancel</button>
+        <button class="btn-modal-primary" id="btn-create-signature">Create Signature</button>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="./src/js/app.js"></script>
+</body>
+</html>

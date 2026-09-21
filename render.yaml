@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: pdfcraft
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: node index.js
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+
